@@ -55,3 +55,16 @@ File.stream!("permits.csv")
   )
   |> Repo.insert!()
 end)
+
+
+alias Govern.Docs.Document
+File.stream!("docs.csv")
+|> Stream.drop(1)
+|> CSV.decode(headers: [:name, :description, :link, :user_id])
+|> Enum.each(fn {:ok, map} ->
+  Document.changeset(
+    %Document{},
+    %{name: map[:name], description: map[:description], link: map[:link], user_id: map[:user_id]}
+  )
+  |> Repo.insert!()
+end)
