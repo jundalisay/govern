@@ -1,5 +1,3 @@
-<h1>Listing Permits</h1>
-
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal GovernWeb.PermitLive.FormComponent,
     id: @permit.id || :new,
@@ -9,10 +7,6 @@
     return_to: Routes.permit_index_path(@socket, :index) %>
 <% end %>
 
-
-<%# <style type="text/css">
-  html, body {background-color: white !important;}
-</style> %>
   
 <div class="p-4">
   <div class="columns is-mobile is-hidden-desktop">
@@ -53,34 +47,29 @@
 
     <div class="column is-9-desktop is-12-mobile">
 
-      <div class="columns is-mobile is-multiline mt-4">  
+      <div id="permits" class="columns is-mobile is-multiline mt-4" phx-update="prepend">  
         <%= for permit <- @permits do %>
-          <div class="column is-4-desktop is-12-mobile">
+          <div class="column is-4-desktop is-12-mobile" id={permit.id}>
             <div class="card card-equal-height p-3">
-              <div id={"permit-#{permit.id}"}>
-                <img src={permit.photo}>
-                <%= live_redirect to: Routes.permit_show_path(@socket, :show, permit) do %>
-                  <h2 class="title"><%= permit.name %></h2>
-                <% end %>
-                <%= permit.status %>
-                <div class="tag">                
-                  <%= permit.step %>
-                </div>
+              <img src={permit.photo}>
+              <%= live_redirect to: Routes.permit_show_path(@socket, :show, permit) do %>
+                <h2 class="title"><%= permit.name %></h2>
+              <% end %>
+              <%= permit.status %>
+              <div class="tag">                
+                <%= permit.step %>
               </div>
+              <%= if permit.step == "processing" do %>                
+                <button class="button is-danger" phx-click="wait" phx-value-id={permit.id} phx-disable-with="Working..">Change to Idle</button>
+              <% else %>
+                <button class="button is-primary" phx-click="process" phx-value-id={permit.id} phx-disable-with="Working..">Change to Processing</button>
+              <% end %>                
 
-              <div class="card-image">
-
-              </div>
-              <div class="card-content">
-                <div class="subtitle is-3">
-
-                </div>
-                <div class="card-footer">
-                  <div class="card-footer-item">                  
-                    <div class="subtitle is-7">                 
-                      <i><%= permit.inserted_at %></i>
-                    </div> 
-                  </div>
+              <div class="card-footer">
+                <div class="card-footer-item">                  
+                  <div class="subtitle is-7">                 
+                    <i><%= permit.inserted_at %></i>
+                  </div> 
                 </div>
               </div>
             </div>

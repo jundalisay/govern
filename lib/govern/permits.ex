@@ -4,15 +4,15 @@ defmodule Govern.Permits do
   """
 
   import Ecto.Query, warn: false
-  alias Govern.Repo
+  alias Govern.{
+    Repo,
+    Permits.Permit
+  }
 
-  alias Govern.Permits.Permit
 
+  def subscribe, do: Phoenix.PubSub.subscribe(Govern.PubSub, "permits")
   @doc """
   Returns the list of permits.
-
-  ## Examples
-
       iex> list_permits()
       [%Permit{}, ...]
 
@@ -23,17 +23,11 @@ defmodule Govern.Permits do
 
   @doc """
   Gets a single permit.
-
   Raises `Ecto.NoResultsError` if the Permit does not exist.
-
-  ## Examples
-
       iex> get_permit!(123)
       %Permit{}
-
       iex> get_permit!(456)
       ** (Ecto.NoResultsError)
-
   """
   def get_permit!(id), do: Repo.get!(Permit, id)
 
@@ -71,7 +65,20 @@ defmodule Govern.Permits do
     permit
     |> Permit.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:permit_updated)
   end
+
+  def broadcast({:ok, permit}, event) do
+    Phoenix.PubSub.broadcast(
+      Govern.PubSub,
+      "permits",
+      {event, permit}
+    )
+
+    {:ok, permit}
+  end
+
+  def broadcast({:error, _reason} = error, _event), do: error  
 
   @doc """
   Deletes a permit.

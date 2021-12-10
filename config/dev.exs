@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :govern, Govern.Repo,
-  username: "password",
-  password: "password",
+  username: "jun",
+  password: "`",
   database: "govern",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

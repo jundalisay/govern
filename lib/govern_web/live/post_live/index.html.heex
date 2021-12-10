@@ -36,17 +36,9 @@
       <% end %>
       <%= for p <- @permits do %>
         <div class="p-2">
-          <%= if p.link do %>
-            <figure class="image">
-              <%= link to: p.link do %>
-                <img src={p.photo} class="rounded">
-              <% end %>
-            </figure>
-          <% else %>
-            <figure class="image">
-              <img src={p.photo} class="rounded">
-            </figure>                                
-          <% end %>          
+          <figure class="image">
+            <img src={p.photo} class="rounded">
+          </figure>         
         </div>
       <% end %>   
     </div>    
