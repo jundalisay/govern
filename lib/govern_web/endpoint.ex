@@ -46,5 +46,7 @@ defmodule GovernWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :govern
   plug GovernWeb.Router
+
 end

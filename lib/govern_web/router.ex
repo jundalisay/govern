@@ -15,6 +15,10 @@ defmodule GovernWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated, error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
   scope "/" do
     pipe_through :browser
 
@@ -22,17 +26,30 @@ defmodule GovernWeb.Router do
   end
 
 
-
   scope "/", GovernWeb do
-    pipe_through :browser
+    pipe_through [:browser, :protected]
 
-    get "/", PageController, :index
+    resources "/articles", ArticleController
+    get "/bus", PageController, :bus
+    get "/jeep", PageController, :jeep    
+    get "/tricycle", PageController, :tricycle
+    
+    live "/", PostLive.Index, :index
+    live "/posts/new", PostLive.Index, :new
+    live "/posts/:id/edit", PostLive.Index, :edit
+
+    live "/posts/:id", PostLive.Show, :show
+    live "/posts/:id/show/edit", PostLive.Show, :edit
+
+    live "/permits", PermitLive.Index, :index
+    live "/permits/new", PermitLive.Index, :new
+    live "/permits/:id/edit", PermitLive.Index, :edit
+
+    live "/permits/:id", PermitLive.Show, :show
+    live "/permits/:id/show/edit", PermitLive.Show, :edit
+
+        resources "/users", UserController
   end
-
-
-
-
-
 
 
 
