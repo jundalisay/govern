@@ -68,3 +68,15 @@ File.stream!("docs.csv")
   )
   |> Repo.insert!()
 end)
+
+alias Govern.Pantries.Pantry
+File.stream!("pantries.csv")
+|> Stream.drop(1)
+|> CSV.decode(headers: [:name, :description, :address, :photo, :user_id])
+|> Enum.each(fn {:ok, map} ->
+  Pantry.changeset(
+    %Pantry{},
+    %{name: map[:name], description: map[:description], address: map[:address], photo: map[:photo], user_id: map[:user_id]}
+  )
+  |> Repo.insert!()
+end)

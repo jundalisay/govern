@@ -66,7 +66,9 @@
         </a>
 
         <div class="navbar-dropdown green" x-show="state">
-          
+          <%= link to: Routes.pantry_path(@conn, :index), class: "navbar-item" do %>
+            <div class="menu-label">Pantries</div>
+          <% end %>
           <%= link to: Routes.page_path(@conn, :bus), class: "navbar-item" do %>
             <div class="menu-label"> Users </div>
           <% end %>
@@ -85,8 +87,7 @@
           </a>
 
           <div class="navbar-dropdown green" x-show="state">
-            <a class="navbar-item menu-label" href="/stats">Dash</a>
-              <%= link "Log Out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "navbar-item menu-label has-text-danger" %>
+            <%= link "Log Out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "navbar-item menu-label has-text-danger" %>
           </div>
         </div>
       <% end %>

@@ -9,21 +9,19 @@
         </div>
       <% end %>
       <%= for ar <- @articles do %>
-        <div class="p-2">
-          <div class="columns" style="background: white">
-            <div class="column is-4">
-              <figure class="image">
-                <%= link to: Routes.article_path(GovernWeb.Endpoint, :show, ar) do %>
-                  <img src={ar.photo} class="rounded">
-                <% end %>
-              </figure>
-            </div>
-            <div class="column is-8">
-              <%= link to: Routes.article_path(GovernWeb.Endpoint, :show, ar) do %>              
-                <small><%= ar.name %></small>
+        <div class="columns m-2" style="background: white">
+          <div class="column is-4">
+            <figure class="image">
+              <%= link to: Routes.article_path(GovernWeb.Endpoint, :show, ar) do %>
+                <img src={ar.photo} class="rounded">
               <% end %>
-            </div>                    
+            </figure>
           </div>
+          <div class="column is-8">
+            <%= link to: Routes.article_path(GovernWeb.Endpoint, :show, ar) do %>              
+              <small><%= ar.name %></small>
+            <% end %>
+          </div>                    
         </div>
       <% end %>   
     </div>
@@ -31,14 +29,21 @@
     <div class="panel is-info">
       <%= link to: Routes.article_path(GovernWeb.Endpoint, :index) do %>    
         <div class="panel-heading">
-          <%= gettext("Promos") %>
+          Permits
         </div>
       <% end %>
       <%= for p <- @permits do %>
-        <div class="p-2">
-          <figure class="image">
-            <img src={p.photo} class="rounded">
-          </figure>         
+        <div class="columns m-2" style="background: white">
+          <div class="column is-4">
+            <figure class="image">
+              <img src={p.photo} class="rounded">
+            </figure>
+          </div>
+          <div class="column is-8">
+            <%= link to: Routes.article_path(GovernWeb.Endpoint, :show, p) do %>              
+              <small><%= p.name %></small>
+            <% end %>
+          </div>                    
         </div>
       <% end %>   
     </div>    
@@ -86,22 +91,14 @@
         </div>
       </.form>
 
-      <div id="footer">
-        
-        
-      </div>
-      
 
     <%= for post <- @posts do %>
       <div class="card p-4 my-2" id="post-{post.id}">
         <div class="columns is-mobile is-multiline">
           <div class="column is-3-mobile is-2-desktop has-text-centered">
-              <figure class="image is-inline-block">
-<%#                 <%= link to: Routes.user_path(GovernWeb.Endpoint, :show, post.user_id) do %>
-                
-              </figure>
-              <br>
-            </div>
+            <figure class="image is-inline-block">                
+            </figure>
+          </div>
           <div class="column is-9-mobile is-10-desktop">
             <%= raw post.content %>
           </div>
@@ -120,6 +117,24 @@
           Maps
         </div>
       <% end %>
-    </div>    
-  </div>    
+    </div>  
+    <div class="card has-text-centered mb-4">
+      <a href="/bus">
+        <img src="/images/bus.jpg">
+        Bus map
+      </a>
+    </div>
+    <div class="card has-text-centered mb-4">
+      <a href="/bus">
+        <img src="/images/ferry.jpg">
+        Ferry map
+      </a>
+    </div>
+    <div class="card has-text-centered mb-4">
+      <a href="/bus">
+        <img src="/images/jeep.jpg">
+        Jeepney map
+      </a>
+    </div>        
+  </div>      
 </div>

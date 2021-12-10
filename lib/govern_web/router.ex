@@ -48,6 +48,7 @@ defmodule GovernWeb.Router do
     live "/permits/:id", PermitLive.Show, :show
     live "/permits/:id/show/edit", PermitLive.Show, :edit
 
+    resources "/pantries", PantryController
     resources "/documents", DocumentController
     resources "/users", UserController
   end

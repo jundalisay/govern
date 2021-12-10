@@ -10,5 +10,5 @@ Pantry Govern is a tech solution that aims to increase the efficiency of managin
 2. Permit tracking
 3. Local news 
 4. Forms upload 
-
-
+5. Pantries for ayuda distribution in kind
+6. Post announcements
